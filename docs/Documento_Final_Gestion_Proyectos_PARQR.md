@@ -1,10 +1,10 @@
 # Informe Final de Proyecto: Sistema PARQR
 ## Gestión de Proyectos bajo el Marco de Trabajo SCRUM
 
-**Institución:** [Nombre de la Institucion DASC Instituto Tecnológico] Universitario 
-**Curso:** proyecto profecional 2  
-**Fecha:** 16 de abril de 2026  
-**Presentado por:** [Abraham Francisco Torres Lezama]  
+**Institución:**DASC Instituto Tecnológico Universitario 
+**Curso:** Proyecto profecional 2  
+**Fecha:** 16 de abril de 2026 
+**Presentado por:** Abraham Francisco Torres Lezama 
 **Proyecto:** PARQR - Control de Acceso Vehicular Inteligente  
 
 ---
