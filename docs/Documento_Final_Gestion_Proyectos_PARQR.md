@@ -24,20 +24,24 @@ Para asegurar una supervisión integral, el proyecto se estructuró siguiendo la
 *   **Monitoreo y Control:** Inspección continua de logs, validación de seguridad y revisión de la calidad (Definition of Done).
 *   **Cierre:** Estabilización final, documentación técnica y entrega del informe final.
 
+---
 
-### 2.1 Pilares del Empirismo
+## 3. Marco Metodológico: SCRUM
+Para la gestión de este proyecto se optó por el marco de trabajo **SCRUM**, debido a la necesidad de adaptación constante frente a desafíos técnicos de integración entre software y hardware.
+
+### 3.1 Pilares del Empirismo
 *   **Transparencia:** Se mantuvo un repositorio centralizado con documentación en el directorio `/docs`, asegurando que el estado del sistema fuera visible en todo momento.
 *   **Inspección:** A través de la revisión de logs y pruebas unitarias en el entorno Docker, se evaluó el progreso de cada funcionalidad.
 *   **Adaptación:** El proyecto pivotó de un modelo de datos simulado (Mock) a una base de datos MySQL robusta tras detectar limitaciones en la persistencia de datos.
 
-### 2.2 Roles del Equipo
+### 3.2 Roles del Equipo
 *   **Product Owner:** Responsable de la visión del producto y la priorización del *Product Backlog*.
 *   **Scrum Master:** Facilitador encargado de eliminar impedimentos técnicos (ej. errores de build en Docker o configuración de Prisma).
 *   **Equipo de Desarrollo:** Célula multidisciplinaria encargada del desarrollo full-stack (Next.js) y programación de sistemas embebidos (C++/Arduino).
 
 ---
 
-## 3. Planificación Estructurada (Product Backlog)
+## 4. Planificación Estructurada (Product Backlog)
 El desarrollo se dividió en historias de usuario priorizadas por valor de negocio:
 
 | ID | Historia de Usuario | Prioridad |
@@ -50,7 +54,7 @@ El desarrollo se dividió en historias de usuario priorizadas por valor de negoc
 
 ---
 
-## 4. Ciclo de Vida del Desarrollo (Sprints)
+## 5. Ciclo de Vida del Desarrollo (Sprints)
 El proyecto se ejecutó en **5 Sprints** de una semana cada uno:
 
 1.  **Sprint 1 (Cimientos):** Configuración del entorno Docker, arquitectura de carpetas y base de datos inicial.
@@ -61,7 +65,7 @@ El proyecto se ejecutó en **5 Sprints** de una semana cada uno:
 
 ---
 
-## 5. Arquitectura Técnica y Estándares
+## 6. Arquitectura Técnica y Estándares
 El sistema sigue una arquitectura moderna desacoplada:
 *   **Frontend/Backend:** Next.js (App Router) comunicándose vía API RESTful.
 *   **Persistencia:** MySQL gestionado por Prisma ORM.
@@ -70,7 +74,7 @@ El sistema sigue una arquitectura moderna desacoplada:
 
 ---
 
-## 6. Aseguramiento de la Calidad (Definition of Done)
+## 7. Aseguramiento de la Calidad (Definition of Done)
 Para garantizar una entrega de grado académico, cada incremento funcional cumplió con:
 1.  **Clean Code:** Código libre de errores de linting y comentarios técnicos pertinentes.
 2.  **Portabilidad:** Funcionamiento verificado dentro de contenedores Docker.
@@ -79,7 +83,7 @@ Para garantizar una entrega de grado académico, cada incremento funcional cumpl
 
 ---
 
-## 7. Lecciones Aprendidas y Conclusiones
+## 8. Lecciones Aprendidas y Conclusiones
 La implementación de SCRUM permitió transformar un prototipo teórico en un sistema funcional capaz de operar en condiciones reales. La principal lección aprendida fue el valor de la **mejora continua**; los errores detectados en la integración de Docker al inicio del proyecto se tradujeron en un pipeline de despliegue más robusto al final del ciclo.
 
 **Impacto Final:** PARQR demuestra ser una solución escalable y profesional que cumple con los estándares actuales de ingeniería de software y gestión de proyectos ágiles.
