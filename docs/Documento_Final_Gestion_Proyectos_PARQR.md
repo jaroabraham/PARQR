@@ -96,14 +96,14 @@ Punto clave: Es rápido, seguro y sin contacto.
 3. La "Magia" detrás del Código (Tecnología)
 No necesitas leer el código, solo explica qué hace cada pieza:
 
-Next.js: "Usamos el framework más moderno actualmente para que la aplicación sea ultra rápida."
+## "Usamos el framework más moderno actualmente para que la aplicación sea ultra rápida."
 Base de Datos (MySQL/Prisma): "Toda la información de residentes y visitas es real y está guardada de forma profesional y segura."
 Docker: "El sistema está 'empaquetado' en contenedores, lo que garantiza que funcione perfectamente en cualquier servidor sin errores de configuración."
 ESP32 (Hardware): "Esta es la parte física. Es un chip que recibe la señal de la nube y acciona el mecanismo para abrir la pluma."
-4. ¿Cómo lo hicimos? 
+## 4. ¿Cómo lo hicimos? 
 "Trabajamos con Scrum en 5 ciclos (Sprints). Empezamos con un prototipo y cada semana fuimos añadiendo piezas: primero la base, luego la seguridad y finalmente la conexión con el hardware real."
 Punto clave: Fuimos adaptables. Si algo fallaba (como el build de Docker), lo arreglábamos de inmediato para seguir avanzando.
-5. El Cierre
+## 5. El Cierre
 "PARQR no es solo una tarea, es una solución real que combina software moderno con hardware físico para mejorar la vida diaria."
 
 ---Andrés Valdez Acuña---
