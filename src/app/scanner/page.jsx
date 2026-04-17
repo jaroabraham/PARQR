@@ -6,6 +6,7 @@ import { QrCode, Shield, Check, X, ArrowRight, Loader2 } from 'lucide-react';
 function ScannerContent() {
   const searchParams = useSearchParams();
   const [token, setToken] = useState('');
+  const [scanMode, setScanMode] = useState('ENTRY'); // 'ENTRY' or 'EXIT'
   const [isValidating, setIsValidating] = useState(false);
   const [result, setResult] = useState(null);
   const [isPlumaOpen, setIsPlumaOpen] = useState(false);
@@ -14,17 +15,17 @@ function ScannerContent() {
     const tokenParam = searchParams.get('token');
     if (tokenParam) {
       setToken(tokenParam);
-      // We need to wait a bit to ensure the component is fully ready or just call validate
-      setTimeout(() => validateToken(tokenParam), 500);
+      setTimeout(() => validateToken(tokenParam, scanMode), 500);
     }
   }, [searchParams]);
 
-  const validateToken = async (tokenToValidate) => {
+  const validateToken = async (tokenToValidate, currentMode) => {
     setIsValidating(true);
     setResult(null);
     
     try {
-      const res = await fetch('/api/qr/validate', {
+      const endpoint = currentMode === 'ENTRY' ? '/api/qr/validate' : '/api/qr/exit';
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ qrToken: tokenToValidate })
@@ -49,7 +50,7 @@ function ScannerContent() {
 
   const handleValidate = async (e) => {
     if (e) e.preventDefault();
-    validateToken(token);
+    validateToken(token, scanMode);
   };
 
   return (
@@ -57,10 +58,10 @@ function ScannerContent() {
       
       <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
-          <Shield size={40} color="#3b82f6" />
+          <Shield size={40} color={scanMode === 'ENTRY' ? "#3b82f6" : "#f59e0b"} />
           <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>Simulador de Caseta</h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '1.2rem' }}>Punto de Validación de Acceso</p>
+        <p style={{ color: '#94a3b8', fontSize: '1.2rem' }}>Control de {scanMode === 'ENTRY' ? 'Entrada' : 'Salida'} con Anti-Passback</p>
       </header>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', justifyContent: 'center', width: '100%', maxWidth: '1200px' }}>
@@ -68,12 +69,40 @@ function ScannerContent() {
         {/* Scanner Terminal */}
         <div style={{ 
           background: '#1e293b', padding: '2.5rem', borderRadius: '24px', 
-          width: '100%', maxWidth: '450px', border: '1px solid rgba(255,255,255,0.1)',
+          width: '100%', maxWidth: '450px', border: `2px solid ${scanMode === 'ENTRY' ? 'rgba(59, 130, 246, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`,
           boxShadow: '0 20px 50px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column'
         }}>
-          <div style={{ background: '#0f172a', padding: '2rem', borderRadius: '16px', marginBottom: '2rem', border: '2px solid #334155', textAlign: 'center' }}>
-            <QrCode size={80} color={isValidating ? '#3b82f6' : '#64748b'} strokeWidth={1.5} className={isValidating ? "pulse" : ""} />
-            <p style={{ marginTop: '1.5rem', color: '#94a3b8', fontSize: '0.875rem' }}>Acerque su código QR al escáner</p>
+          
+          {/* Mode Switcher */}
+          <div style={{ display: 'flex', background: '#0f172a', borderRadius: '12px', padding: '0.25rem', marginBottom: '1.5rem' }}>
+            <button 
+              onClick={() => setScanMode('ENTRY')}
+              style={{ 
+                flex: 1, padding: '0.75rem', borderRadius: '8px', border: 'none',
+                background: scanMode === 'ENTRY' ? '#3b82f6' : 'transparent',
+                color: 'white', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s'
+              }}
+            >
+              ENTRADA
+            </button>
+            <button 
+              onClick={() => setScanMode('EXIT')}
+              style={{ 
+                flex: 1, padding: '0.75rem', borderRadius: '8px', border: 'none',
+                background: scanMode === 'EXIT' ? '#f59e0b' : 'transparent',
+                color: 'white', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s'
+              }}
+            >
+              SALIDA
+            </button>
+          </div>
+
+          <div style={{ 
+            background: '#0f172a', padding: '2rem', borderRadius: '16px', marginBottom: '2rem', 
+            border: `2px solid ${scanMode === 'ENTRY' ? '#3b82f6' : '#f59e0b'}`, textAlign: 'center' 
+          }}>
+            <QrCode size={80} color={isValidating ? (scanMode === 'ENTRY' ? '#3b82f6' : '#f59e0b') : '#64748b'} strokeWidth={1.5} className={isValidating ? "pulse" : ""} />
+            <p style={{ marginTop: '1.5rem', color: '#94a3b8', fontSize: '0.875rem' }}>Escaneando en <strong>Modo {scanMode === 'ENTRY' ? 'Entrada' : 'Salida'}</strong></p>
           </div>
 
           <form onSubmit={handleValidate} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -87,14 +116,14 @@ function ScannerContent() {
             <button 
               disabled={isValidating || !token}
               style={{ 
-                padding: '1rem', borderRadius: '12px', background: '#3b82f6', color: 'white', 
+                padding: '1rem', borderRadius: '12px', background: scanMode === 'ENTRY' ? '#3b82f6' : '#f59e0b', color: 'white', 
                 border: 'none', fontWeight: '600', fontSize: '1.1rem', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
                 opacity: isValidating || !token ? 0.7 : 1, transition: 'all 0.2s'
               }}
             >
               {isValidating ? <Loader2 className="spin" size={20} /> : <ArrowRight size={20} />}
-              Validar Acceso
+              Validar {scanMode === 'ENTRY' ? 'Entrada' : 'Salida'}
             </button>
           </form>
 

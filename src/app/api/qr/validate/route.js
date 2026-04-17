@@ -20,8 +20,35 @@ export async function POST(request) {
         await prisma.accessLog.create({ data: { userId: resident.id, action: 'DENIED' } });
         return NextResponse.json({ success: false, message: 'Usuario no aprobado' }, { status: 403 });
       }
+
+      const now = new Date();
+
+      // Anti-Passback: No puede entrar si ya está adentro
+      if (resident.isInside) {
+        await prisma.accessLog.create({ data: { userId: resident.id, action: 'DENIED' } });
+        return NextResponse.json({ 
+          success: false, 
+          message: 'Acceso Denegado: Usted ya se encuentra dentro del recinto.' 
+        }, { status: 403 });
+      }
+
+      // Cooldown: Esperar 50 segundos entre ingresos
+      if (resident.lastAccess) {
+        const diffSeconds = (now.getTime() - new Date(resident.lastAccess).getTime()) / 1000;
+        if (diffSeconds < 50) {
+          return NextResponse.json({ 
+            success: false, 
+            message: `Acceso Denegado: Espere ${Math.ceil(50 - diffSeconds)} segundos para volver a ingresar.` 
+          }, { status: 429 });
+        }
+      }
       
-      // Permitir acceso
+      // Permitir acceso y actualizar estado del residente
+      await prisma.user.update({
+        where: { id: resident.id },
+        data: { isInside: true, lastAccess: now }
+      });
+
       global.openGate = true;
       setTimeout(() => { global.openGate = false; }, 10000);
       
@@ -29,7 +56,7 @@ export async function POST(request) {
       
       return NextResponse.json({ 
         success: true, 
-        message: 'Acceso de Residente válido. Abriendo pluma.',
+        message: 'Acceso de Residente válido (Entrada). Abriendo pluma.',
         resident: resident.name 
       });
     }

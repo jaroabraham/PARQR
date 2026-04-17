@@ -16,6 +16,8 @@ model User {
   role         Role     @default(RESIDENTE)
   status       Status   @default(PENDING)
   qrToken      String?  @unique
+  isInside     Boolean  @default(false)
+  lastAccess   DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   guests       Guest[]
@@ -58,5 +60,6 @@ enum Status {
 
 enum Action {
   ENTRY
+  EXIT
   DENIED
 }
