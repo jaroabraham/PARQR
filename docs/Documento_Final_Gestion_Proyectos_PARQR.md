@@ -16,8 +16,14 @@ El proyecto **PARQR** surge como una respuesta tecnológica a la ineficiencia de
 
 ---
 
-## 2. Marco Metodológico: SCRUM
-Para la gestión de este proyecto se optó por el marco de trabajo **SCRUM**, debido a la necesidad de adaptación constante frente a desafíos técnicos de integración entre software y hardware.
+## 2. Fases del Proceso de Gestión
+Para asegurar una supervisión integral, el proyecto se estructuró siguiendo las 5 fases esenciales de la gestión de proyectos:
+*   **Inicio:** Identificación de la problemática de acceso vehicular y definición de la visión del sistema PARQR.
+*   **Planificación:** Diseño de la arquitectura de contenedores, modelado de la base de datos MySQL y priorización del Product Backlog.
+*   **Ejecución:** Desarrollo de los incrementos funcionales durante los 5 Sprints.
+*   **Monitoreo y Control:** Inspección continua de logs, validación de seguridad y revisión de la calidad (Definition of Done).
+*   **Cierre:** Estabilización final, documentación técnica y entrega del informe final.
+
 
 ### 2.1 Pilares del Empirismo
 *   **Transparencia:** Se mantuvo un repositorio centralizado con documentación en el directorio `/docs`, asegurando que el estado del sistema fuera visible en todo momento.
